@@ -1,46 +1,43 @@
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
-bool isLeapYear(int year) {
-    if (year % 100 == 0) {
-        return (year % 400 == 0);
-    } else {
-        return (year % 4 == 0);
-    }
-}
-
-int getDaysInMonth(int month, int year) {
-    switch (month) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            return 31;
-        case 4: case 6: case 9: case 11:
-            return 30;
-        case 2:
-            return isLeapYear(year) ? 29 : 28;
-        default:
-            return -1; // Invalid month
-    }
+double getRate(double weight) {
+    if (weight <= 2) return 1.10;
+    else if (weight <= 6) return 2.20;
+    else if (weight <= 10) return 3.70;
+    else return 4.80;
 }
 
 int main() {
-    int month, year;
+    double weight, distance;
 
-    // Get user input with validation
+    // Get weight input with validation
     do {
-        cout << "Enter a month (1–12): ";
-        cin >> month;
-        if (month < 1 || month > 12) {
-            cout << "Invalid month. Please enter a number between 1 and 12." << endl;
+        cout << "Enter the weight of the package (kg): ";
+        cin >> weight;
+        if (weight <= 0 || weight > 20) {
+            cout << "Invalid weight. Must be between 0 and 20 kg." << endl;
         }
-    } while (month < 1 || month > 12);
+    } while (weight <= 0 || weight > 20);
 
-    cout << "Enter a year: ";
-    cin >> year;
+    // Get distance input with validation
+    do {
+        cout << "Enter the shipping distance (miles): ";
+        cin >> distance;
+        if (distance < 10 || distance > 3000) {
+            cout << "Invalid distance. Must be between 10 and 3000 miles." << endl;
+        }
+    } while (distance < 10 || distance > 3000);
 
-    // Get and display the number of days in the given month/year
-    int days = getDaysInMonth(month, year);
-    cout << days << " days" << endl;
+    // Calculate charges
+    double rate = getRate(weight);
+    double charge = rate * (distance / 500);
+
+    // Display the shipping charge
+    cout << fixed << setprecision(2);
+    cout << "Shipping charge: $" << charge << endl;
 
     return 0;
 }
