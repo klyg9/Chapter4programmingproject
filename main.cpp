@@ -3,41 +3,41 @@
 
 using namespace std;
 
-double getRate(double weight) {
-    if (weight <= 2) return 1.10;
-    else if (weight <= 6) return 2.20;
-    else if (weight <= 10) return 3.70;
-    else return 4.80;
-}
+const double PI = 3.14159;
 
 int main() {
-    double weight, distance;
+    int choice;
+    double a, b;
 
-    // Get weight input with validation
     do {
-        cout << "Enter the weight of the package (kg): ";
-        cin >> weight;
-        if (weight <= 0 || weight > 20) {
-            cout << "Invalid weight. Must be between 0 and 20 kg." << endl;
+        cout << "\nGeometry Calculator\n";
+        cout << "1. Calculate the Area of a Circle\n";
+        cout << "2. Calculate the Area of a Rectangle\n";
+        cout << "3. Calculate the Area of a Triangle\n";
+        cout << "4. Quit\n";
+        cout << "Enter your choice (1–4): ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 4) {
+            cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+            continue;
         }
-    } while (weight <= 0 || weight > 20);
 
-    // Get distance input with validation
-    do {
-        cout << "Enter the shipping distance (miles): ";
-        cin >> distance;
-        if (distance < 10 || distance > 3000) {
-            cout << "Invalid distance. Must be between 10 and 3000 miles." << endl;
-        }
-    } while (distance < 10 || distance > 3000);
+        if (choice == 4) break;
 
-    // Calculate charges
-    double rate = getRate(weight);
-    double charge = rate * (distance / 500);
+        do {
+            cout << "Enter dimensions: ";
+            cin >> a;
+            if (choice != 1) cin >> b;
+            if (a < 0 || (choice != 1 && b < 0))
+                cout << "Invalid input. Dimensions must be non-negative.\n";
+        } while (a < 0 || (choice != 1 && b < 0));
 
-    // Display the shipping charge
-    cout << fixed << setprecision(2);
-    cout << "Shipping charge: $" << charge << endl;
+        double area = (choice == 1) ? PI * a * a : (choice == 2) ? a * b : 0.5 * a * b;
+        cout << "Area: " << fixed << setprecision(2) << area << "\n";
 
+    } while (true);
+
+    cout << "Goodbye!\n";
     return 0;
 }
